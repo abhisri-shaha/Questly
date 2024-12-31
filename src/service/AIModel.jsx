@@ -1,0 +1,35 @@
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+
+const apiKey = import.meta.env.VITE_GOOGLE_GEMINI_API_KEY;
+const genAI = new GoogleGenerativeAI(apiKey);
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-1.5-pro",
+});
+
+const generationConfig = {
+  temperature: 1,
+  topP: 0.95,
+  topK: 40,
+  maxOutputTokens: 8192,
+  responseMimeType: "application/json",
+};
+
+export const chatSession = model.startChat({
+  generationConfig,
+  history: [
+    {
+      role: "user",
+      parts: [
+        {text: "Generate Travel Plan for Location: Las Vegas, for 3 Days for 2 people with a Cheap budget, Give me a Hotels options list with HotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName, Place Details, Place Image Url, Geo Coordinates, ticket Pricing, rating, Time to travel to each of the location, and best time to visit each location for 3 days with each day plan in JSON format."},
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {text: "```json\n{\n  \"tripDetails\": {\n    \"location\": \"Las Vegas, Nevada\",\n    \"duration\": \"3 Days\",\n    \"budget\": \"Cheap\",\n    \"travelers\": \"Couple\"\n  },\n  \"hotels\": [\n    {\n      \"hotelName\": \"Circus Circus Hotel, Casino & Theme Park\",\n      \"hotelAddress\": \"2880 S Las Vegas Blvd, Las Vegas, NV 89109\",\n      \"price\": \"$40-$90 per night\",\n      \"hotelImageUrl\": \"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/09/95/70/getlstdpropertyphoto.jpg?w=900&h=-1&s=1\",\n      \"geoCoordinates\": {\n        \"latitude\": 36.13317,\n        \"longitude\": -115.17124\n      },\n      \"rating\": 3.5,\n      \"description\": \"Affordable hotel with a casino, theme park, and circus acts.\"\n    },\n    {\n      \"hotelName\": \"Excalibur Hotel & Casino\",\n      \"hotelAddress\": \"3850 S Las Vegas Blvd, Las Vegas, NV 89109\",\n      \"price\": \"$50-$120 per night\",\n      \"hotelImageUrl\": \"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/03/c9/fe/excalibur-hotel-casino.jpg?w=900&h=-1&s=1\",\n      \"geoCoordinates\": {\n        \"latitude\": 36.10235,\n        \"longitude\": -115.17279\n      },\n      \"rating\": 3.5,\n      \"description\": \"Medieval-themed hotel with affordable rooms and various entertainment options.\"\n    },\n    {\n      \"hotelName\": \"LINQ Hotel + Experience\",\n      \"hotelAddress\": \"3535 S Las Vegas Blvd, Las Vegas, NV 89109\",\n      \"price\": \"$70-$150 per night\",\n      \"hotelImageUrl\": \"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/a8/a6/fc/the-linq-hotel-casino.jpg?w=900&h=-1&s=1\",\n      \"geoCoordinates\": {\n        \"latitude\": 36.1178,\n        \"longitude\": -115.1712\n      },\n      \"rating\": 4.0,\n      \"description\": \"Modern hotel with a lively atmosphere, the High Roller observation wheel, and various dining and entertainment venues.\"\n    }\n  ],\n  \"itinerary\": [\n    {\n      \"day\": 1,\n      \"plan\": [\n        {\n          \"placeName\": \"Welcome to Fabulous Las Vegas Sign\",\n          \"placeDetails\": \"Iconic welcome sign, a must-see photo opportunity.\",\n          \"placeImageUrl\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Welcome_to_Fabulous_Las_Vegas_Sign.jpg/2560px-Welcome_to_Fabulous_Las_Vegas_Sign.jpg\",\n          \"geoCoordinates\": {\n            \"latitude\": 36.08896,\n            \"longitude\": -115.17487\n          },\n          \"ticketPricing\": \"Free\",\n          \"rating\": 4.5,\n          \"timeToTravel\": \"15 minutes from the Strip\",\n          \"bestTimeToVisit\": \"Early morning or evening to avoid crowds\"\n        },\n        {\n          \"placeName\": \"Fremont Street Experience\",\n          \"placeDetails\": \"Pedestrian mall with a light and sound show, zip lines, and street performers.\",\n          \"placeImageUrl\": \"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/07/c9/34/9c/viva-vision-screen-at.jpg?w=900&h=-1&s=1\",\n          \"geoCoordinates\": {\n            \"latitude\": 36.1716,\n            \"longitude\": -115.1428\n          },\n          \"ticketPricing\": \"Free (shows and attractions have separate fees)\",\n          \"rating\": 4.0,\n          \"timeToTravel\": \"20 minutes from the Strip\",\n          \"bestTimeToVisit\": \"Evening\"\n        }\n      ]\n    },\n    {\n      \"day\": 2,\n      \"plan\": [\n        {\n          \"placeName\": \"Bellagio Conservatory & Botanical Garden\",\n          \"placeDetails\": \"Stunning displays of flowers, sculptures, and seasonal themes.\",\n          \"placeImageUrl\": \"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/06/88/20/51/bellagio-conservatory-botanical.jpg?w=900&h=-1&s=1\",\n          \"geoCoordinates\": {\n            \"latitude\": 36.1132,\n            \"longitude\": -115.1767\n          },\n          \"ticketPricing\": \"Free\",\n          \"rating\": 4.5,\n          \"timeToTravel\": \"Central Strip location\",\n          \"bestTimeToVisit\": \"Daytime\"\n        },\n        {\n          \"placeName\": \"The Venetian Hotel and Casino\",\n          \"placeDetails\": \"Experience the canals, gondolas, and Italian ambiance.\",\n          \"placeImageUrl\": \"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/05/a7/0c/f2/venetian.jpg?w=900&h=-1&s=1\",\n          \"geoCoordinates\": {\n            \"latitude\": 36.1167,\n            \"longitude\": -115.1743\n          },\n          \"ticketPricing\": \"Free (gondola rides have a fee)\",\n          \"rating\": 4.5,\n          \"timeToTravel\": \"Central Strip location\",\n          \"bestTimeToVisit\": \"Any time\"\n        }\n      ]\n    },\n    {\n      \"day\": 3,\n      \"plan\": [\n        {\n          \"placeName\": \"High Roller Observation Wheel\",\n          \"placeDetails\": \"Giant Ferris wheel offering stunning views of the city.\",\n          \"placeImageUrl\": \"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/7e/88/7d/the-high-roller.jpg?w=900&h=-1&s=1\",\n          \"geoCoordinates\": {\n            \"latitude\": 36.1178,\n            \"longitude\": -115.1712\n          },\n          \"ticketPricing\": \"$25 per person\",\n          \"rating\": 4.0,\n          \"timeToTravel\": \"Located at The LINQ\",\n          \"bestTimeToVisit\": \"Sunset or nighttime\"\n        },\n        {\n          \"placeName\": \"Arts District\",\n          \"placeDetails\": \"Explore art galleries, studios, and trendy cafes.\",\n          \"placeImageUrl\": \"https://www.reviewjournal.com/wp-content/uploads/2018/04/10425790_web1_artsdistrict_041018ev_002.jpg\",\n          \"geoCoordinates\": {\n            \"latitude\": 36.1675,\n            \"longitude\": -115.1372\n          },\n          \"ticketPricing\": \"Free (individual galleries and shops may have fees)\",\n          \"rating\": 4.0,\n          \"timeToTravel\": \"15-20 minutes from the Strip\",\n          \"bestTimeToVisit\": \"Daytime or early evening\"\n        }\n      ]\n    }\n  ]\n}\n```"},
+      ],
+    },
+  ],
+});
