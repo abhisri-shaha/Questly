@@ -61,7 +61,7 @@ function CreateTrip() {
     }
 
     if (formData?.noOfDays > 15 || !formData?.location || !formData?.noOfDays || !formData?.budget || !formData?.traveler) {
-      toast("Please fill in all the details")
+      toast("Please fill in all the details properly")
       return;
     }
     
@@ -142,8 +142,10 @@ function CreateTrip() {
         <div>
           <h2 className="text-xl my-3 font-medium">For how many days?</h2>
           <Input
-            placeholder={"Max. 15"}
+            placeholder={"Max. 30"}
             type="number"
+            min={1}
+            max={30}
             onChange={(e) => handleInputChange("noOfDays", e.target.value)}
             className="dark:bg-white dark:text-black"
           />
